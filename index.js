@@ -19,8 +19,14 @@ function createMockServer({ rules, ...config }) {
   grpcServer.getInteractionsOn = (method) => routes[method].interactions;
   grpcServer.clearInteractions = () => Object.keys(routes).forEach(method => routes[method].interactions.length = 0);
 
-  // save to ease adding more protos later
+  // save the routes so they can be used in addProtos()
   grpcServer.routes = routes;
+
+  // allows adding additional protobufs to the server
+  grpcServer.addProtos = function addProtos({ ...config }) {
+    var routes = this.routes;
+    return this.use({ ...config, routes});
+  }
     
   return grpcServer.use({ ...config, routes });
 }

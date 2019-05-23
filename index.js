@@ -19,6 +19,9 @@ function createMockServer({ rules, ...config }) {
   grpcServer.getInteractionsOn = (method) => routes[method].interactions;
   grpcServer.clearInteractions = () => Object.keys(routes).forEach(method => routes[method].interactions.length = 0);
 
+  // save to ease adding more protos later
+  grpcServer.routes = routes;
+    
   return grpcServer.use({ ...config, routes });
 }
 

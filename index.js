@@ -268,6 +268,7 @@ class HandlerFactory {
             }.bind(null, [...stream], []));
           })()
         } else {
+          console.log("------\nREQUEST:\n", call, "\nARGS:\n", call.request);
           if (isMatched(call.request, input)) {
             if (error) {
               response.error = error;
